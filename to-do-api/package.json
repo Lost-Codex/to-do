@@ -12,11 +12,12 @@
     "db:studio": "bunx prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^7.0.0",
+    "@elysiajs/cors": "^1.2.3",
+    "@elysiajs/openapi": "^1.4.14",
     "@prisma/adapter-pg": "^7.0.0",
-    "pg": "^8.13.3",
+    "@prisma/client": "^7.0.0",
     "elysia": "^1.2.25",
-    "@elysiajs/cors": "^1.2.3"
+    "pg": "^8.13.3"
   },
   "devDependencies": {
     "prisma": "^7.0.0",
