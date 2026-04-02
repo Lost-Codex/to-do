@@ -1,5 +1,6 @@
 import { Elysia, t } from "elysia";
 import { prisma } from "../lib/prisma";
+import { ProductScalarFieldEnum } from "../generated/prisma/client/internal/prismaNamespace";
 
 export const inventoryRoutes = (app: Elysia) =>
   app.group('/inventory', (app) =>
@@ -7,15 +8,23 @@ export const inventoryRoutes = (app: Elysia) =>
       // Lab 1: GET /inventory - ดึงข้อมูลสินค้าทั้งหมด เรียงตามชื่อ A-Z
       // Challenge: เพิ่ม query param low_stock=true สำหรับสินค้าที่ quantity <= 10
       .get('/', async ({ query }) => {
-        const lowStock = query.low_stock === 'true';
-        const where = lowStock ? { quantity: { lte: 10 } } : {};
+        const { low_stock = 'false' } = query;
+        const isLowStock = low_stock === 'true';
 
-        return await prisma.product.findMany({
+        const where = isLowStock ? { quantity: { lte: 10 } } : {};
+
+        const products = await prisma.product.findMany({
           where,
           orderBy: { name: 'asc' },
         });
-      })
 
+        return products.map((product) => ({
+          ...product,
+          low_stock: product.quantity <= 10,
+        }));
+      })
+      
+      
       // Lab 2: POST /inventory - เพิ่มสินค้าใหม่
       // Challenge: ใช้ TypeBox สำหรับ validation
       .post(
