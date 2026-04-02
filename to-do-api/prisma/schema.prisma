@@ -10,12 +10,10 @@ datasource db {
   provider = "postgresql"
 }
 
-model Todo {
-  id        Int      @id @default(autoincrement())
-  title     String
-  completed Boolean  @default(false)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt       @map("updated_at")
-
-  @@map("todos")
+model Product {
+  id       String @id @default(uuid())
+  name     String
+  sku      String @unique
+  quantity Int    @default(0)
+  zone     String
 }

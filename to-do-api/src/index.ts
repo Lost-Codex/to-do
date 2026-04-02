@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import {openapi} from "@elysiajs/openapi";
-import { todoRoutes } from "./routes/todos";
+import { inventoryRoutes } from "./routes/inventory";
 
 const PORT = Number(process.env.PORT ?? 3000);
 const corsOrigin = process.env.CORS_ORIGIN?.trim();
@@ -29,7 +29,7 @@ const app = new Elysia()
   .get("/health", () => ({ status: "ok" }))
 
   // API routes
-  .use(todoRoutes)
+  .use(inventoryRoutes)
 
   .listen(PORT);
 
